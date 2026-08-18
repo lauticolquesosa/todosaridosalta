@@ -7,7 +7,7 @@
   --ink: #1f2124;
   --ink-soft: #3d3d3a;
   --muted: #5c5f63;
-  --faint: #8c8c86;
+  --faint: #686861;
   --sand: #f4f2ee;
   --sand-2: #eae7e1;
   --line: #d8d4cc;
@@ -434,9 +434,7 @@ ul {
 }
 .header--scrolled {
   border-bottom-color: var(--line);
-  background: rgba(244, 242, 238, 0.82);
-  backdrop-filter: saturate(140%) blur(12px);
-  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  background: var(--sand);
   box-shadow: 0 1px 24px -12px rgba(31, 33, 36, 0.4);
 }
 /* al bajar se corre; al subir vuelve */
@@ -1042,7 +1040,7 @@ ul {
   content: '—';
   position: absolute;
   left: 0;
-  color: var(--accent);
+  color: var(--ink-soft);
 }
 .panel .lnk {
   margin-top: 24px;
@@ -1140,7 +1138,7 @@ tbody tr:not(:last-child) td {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 28px;
-  color: var(--accent);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 .step h3 {
