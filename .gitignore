@@ -9,3 +9,6 @@ next-env.d.ts
 
 # Documentos internos del proyecto (no se publican)
 docs/
+
+.vercel
+.env*
