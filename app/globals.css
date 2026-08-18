@@ -330,34 +330,37 @@ ul {
 
 .reveal {
   --i: 0;
-  opacity: 0;
-  transform: translateY(20px);
   transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
   transition-delay: calc(var(--i) * 80ms);
-  will-change: opacity, transform;
+}
+.js-motion .reveal:not(.in) {
+  opacity: 0;
+  transform: translateY(20px);
 }
 .reveal.in {
   opacity: 1;
   transform: none;
 }
-.reveal.in:not(.reveal--hold) {
-  will-change: auto;
-}
 
-/* imagen que se descubre: la máscara sube y la foto suelta el zoom */
+/* La imagen entra soltando el zoom. El estado oculto vive detrás de
+   .js-motion: si el JS no corre o falla, la foto se ve y punto. */
 .reveal-img {
   --i: 0;
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.9s var(--ease);
+  transition: opacity 0.8s var(--ease);
   transition-delay: calc(var(--i) * 80ms);
+}
+.js-motion .reveal-img:not(.in) {
+  opacity: 0;
 }
 .reveal-img.in {
-  clip-path: inset(0 0 0 0);
+  opacity: 1;
 }
 .reveal-img img {
-  transform: scale(1.08);
   transition: transform 1.1s var(--ease);
   transition-delay: calc(var(--i) * 80ms);
+}
+.js-motion .reveal-img:not(.in) img {
+  transform: scale(1.06);
 }
 .reveal-img.in img {
   transform: scale(1);
@@ -393,7 +396,10 @@ ul {
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-img,
-  .reveal-img img {
+  .reveal-img img,
+  .js-motion .reveal:not(.in),
+  .js-motion .reveal-img:not(.in),
+  .js-motion .reveal-img:not(.in) img {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
