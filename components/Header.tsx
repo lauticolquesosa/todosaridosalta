@@ -15,17 +15,55 @@ const PISCINAS = [
 export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const progressRef = useRef<HTMLSpanElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [accOpen, setAccOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Un solo listener de scroll para las tres cosas que hace el header:
+   * compactarse, esconderse al bajar y dibujar la línea de avance.
+   * Todo dentro de un rAF para no trabar el scroll.
+   */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let last = window.scrollY;
+    let ticking = false;
+
+    const apply = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+
+      // se esconde al bajar, vuelve apenas subís. Nunca con el menú abierto.
+      if (!menuOpen) {
+        const delta = y - last;
+        if (y > 160 && delta > 6) setHidden(true);
+        else if (delta < -6 || y <= 160) setHidden(false);
+      }
+      last = y;
+
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(y / max, 1) : 0;
+      progressRef.current?.style.setProperty('--p', p.toFixed(4));
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(apply);
+    };
+
+    apply();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -67,7 +105,9 @@ export default function Header() {
 
   return (
     <>
-      <header className={`header${scrolled ? ' header--scrolled' : ''}`}>
+      <header
+        className={`header${scrolled ? ' header--scrolled' : ''}${hidden && !menuOpen ? ' header--hidden' : ''}`}
+      >
         <div className="header__inner">
           <Link href="/" className="brand" aria-label={`${BRAND.name}, inicio`}>
             <Image src="/logo-mark.png" alt="" width={40} height={40} priority style={{ height: 40, width: 'auto' }} />
@@ -131,6 +171,7 @@ export default function Header() {
             <span />
           </button>
         </div>
+        <span className="header__progress" ref={progressRef} aria-hidden="true" />
       </header>
 
       {menuOpen && (

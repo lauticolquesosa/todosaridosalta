@@ -18,7 +18,7 @@ export default function HomePage() {
                 Movimiento de suelos y construcción de piscinas en Salta. Un solo equipo desde la excavación hasta el
                 día que la llenás.
               </p>
-              <div style={{ marginTop: 36 }}>
+              <div className="hero__cta" style={{ marginTop: 36 }}>
                 <Link href="/presupuesto" className="btn btn--primary btn--lg">
                   Pedir presupuesto
                 </Link>
