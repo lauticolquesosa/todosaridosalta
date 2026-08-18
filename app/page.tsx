@@ -157,8 +157,8 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------------------------------------------- cta */}
-      <section className="section--dark">
-        <div className="wrap" style={{ paddingTop: 'var(--sec-y)', paddingBottom: 'var(--sec-y)' }}>
+      <section className="section--dark cta-final">
+        <div className="wrap">
           <div className="cta-band reveal">
             <h2 className="h2">Contanos dónde va la pileta</h2>
             <Link href="/presupuesto" className="btn btn--primary btn--lg">
