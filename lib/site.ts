@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://todoaridossalta.vercel.app';
+export const SITE_URL = 'https://todosaridosalta.vercel.app';
 
 export const BRAND = {
   name: 'Todo Áridos Salta',

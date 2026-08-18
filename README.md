@@ -69,7 +69,7 @@ Casi todo el texto y los datos viven en **`lib/site.ts`**. Para el trabajo habit
 
 ## Antes de publicar
 
-1. **`SITE_URL`** en `lib/site.ts` apunta a `https://todoaridossalta.vercel.app`. Si el sitio sale sobre otro dominio, cambialo ahí: de ese valor salen el sitemap, los canónicos y las tarjetas de OpenGraph.
+1. **`SITE_URL`** en `lib/site.ts` apunta a `https://todosaridosalta.vercel.app`. Si el sitio sale sobre otro dominio, cambialo ahí: de ese valor salen el sitemap, los canónicos y las tarjetas de OpenGraph.
 2. **Las fotos son generadas con IA** y están puestas como referencia para que el sitio se vea completo. Reemplazalas por fotos reales de las obras antes de mostrarlo como definitivo — en construcción la foto propia es lo que sostiene la credibilidad. Los nombres de archivo ya están definidos, alcanza con pisar los `.webp` de `public/obras/` y `public/img/`.
 3. **Dirección y horario** figuran como "a confirmar" en el footer. Completalos cuando estén.
 4. Los perfiles de Instagram y Facebook del footer salen de `BRAND`.
