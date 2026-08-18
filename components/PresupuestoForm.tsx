@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { wa } from '@/lib/site';
+import { BRAND, wa } from '@/lib/site';
 
 type Budget = {
   que: string;
@@ -10,11 +10,21 @@ type Budget = {
   zona: string;
   medida: string;
   terreno: string;
+  detalle: string;
   nombre: string;
   tel: string;
 };
 
-const EMPTY: Budget = { que: '', tipo: '', zona: '', medida: '', terreno: '', nombre: '', tel: '' };
+const EMPTY: Budget = {
+  que: '',
+  tipo: '',
+  zona: '',
+  medida: '',
+  terreno: '',
+  detalle: '',
+  nombre: '',
+  tel: '',
+};
 
 const QUE = ['Pileta nueva', 'Refacción de una existente', 'Solo movimiento de suelos'];
 const TIPOS = [
@@ -28,15 +38,20 @@ const SOLO_SUELOS = 'Solo movimiento de suelos';
 
 const telValido = (t: string) => t.replace(/[^0-9]/g, '').length >= 6;
 
+/** Arma el mensaje de WhatsApp con todo lo que cargó la persona en el formulario. */
 function buildMsg(b: Budget): string {
-  const L = ['Hola, quiero pedir un presupuesto.'];
-  L.push(`Qué necesito: ${b.que || '-'}`);
-  if (b.que !== SOLO_SUELOS && b.tipo) L.push(`Tipo de pileta: ${b.tipo}`);
-  if (b.zona) L.push(`Zona: ${b.zona}`);
-  if (b.medida) L.push(`Medida aproximada: ${b.medida}`);
-  if (b.terreno) L.push(`Terreno preparado: ${b.terreno}`);
-  L.push(`Mi nombre: ${b.nombre || '-'}`);
-  L.push(`Teléfono: ${b.tel || '-'}`);
+  const L: string[] = [`Hola ${BRAND.name}, quiero pedir un presupuesto.`, ''];
+  L.push(`• Qué necesito: ${b.que || '-'}`);
+  if (b.que !== SOLO_SUELOS) L.push(`• Tipo de pileta: ${b.tipo || 'a definir'}`);
+  L.push(`• Zona: ${b.zona.trim() || 'a confirmar'}`);
+  if (b.que !== SOLO_SUELOS) L.push(`• Medida aproximada: ${b.medida || 'a confirmar'}`);
+  L.push(`• Terreno preparado: ${b.terreno || 'a confirmar'}`);
+  if (b.detalle.trim()) L.push(`• Detalle: ${b.detalle.trim()}`);
+  L.push('');
+  L.push(`Mi nombre: ${b.nombre.trim() || '-'}`);
+  L.push(`Mi teléfono: ${b.tel.trim() || '-'}`);
+  L.push('');
+  L.push('¿Me pasan el presupuesto de esto, por favor?');
   return L.join('\n');
 }
 
@@ -51,6 +66,8 @@ export default function PresupuestoForm() {
   });
   const [step, setStep] = useState(1);
   const [confirm, setConfirm] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [stepError, setStepError] = useState('');
   const [touchedNombre, setTouchedNombre] = useState(false);
   const [touchedTel, setTouchedTel] = useState(false);
   const headingRef = useRef<HTMLDivElement>(null);
@@ -64,31 +81,46 @@ export default function PresupuestoForm() {
     headingRef.current?.focus();
   }, [step, confirm]);
 
-  const set = (patch: Partial<Budget>) => setBudget((b) => ({ ...b, ...patch }));
+  const set = (patch: Partial<Budget>) => {
+    setStepError('');
+    setBudget((b) => ({ ...b, ...patch }));
+  };
 
   const errNombre = touchedNombre && !budget.nombre.trim();
   const errTel = touchedTel && !telValido(budget.tel);
 
   const next = () => {
     if (step === 1) {
+      if (!budget.que) return setStepError('Elegí una opción para seguir.');
+      setStepError('');
       setStep(budget.que === SOLO_SUELOS ? 3 : 2);
       return;
     }
-    if (step === 2 || step === 3) {
-      setStep(step + 1);
+    if (step === 2) {
+      if (!budget.tipo) return setStepError('Elegí el tipo de pileta para seguir.');
+      setStepError('');
+      setStep(3);
+      return;
+    }
+    if (step === 3) {
+      setStepError('');
+      setStep(4);
       return;
     }
     if (step === 4) {
       if (!budget.nombre.trim() || !telValido(budget.tel)) {
         setTouchedNombre(true);
         setTouchedTel(true);
+        setStepError('Nos falta tu nombre y un teléfono para poder responderte.');
         return;
       }
+      setStepError('');
       setConfirm(true);
     }
   };
 
   const back = () => {
+    setStepError('');
     if (confirm) {
       setConfirm(false);
       setStep(4);
@@ -104,23 +136,40 @@ export default function PresupuestoForm() {
   if (confirm) {
     return (
       <div style={{ marginTop: 36 }}>
-        <h2 tabIndex={-1} ref={headingRef} style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 26 }}>
+        <h2
+          tabIndex={-1}
+          ref={headingRef}
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 26 }}
+        >
           Listo, revisá tu pedido
         </h2>
         <p style={{ fontSize: 16, lineHeight: 1.6, color: 'var(--muted)', marginTop: 12, maxWidth: '52ch' }}>
-          Al tocar el botón se abre WhatsApp con este mensaje ya escrito. Del otro lado te responden con el presupuesto.
+          Al tocar <strong>Consultar</strong> se abre WhatsApp al {BRAND.phoneLabel} con este mensaje ya escrito. Solo
+          te queda darle enviar.
         </p>
         <div className="msg-box">
-          <p>{msg}</p>
+          <p style={{ whiteSpace: 'pre-line' }}>{msg}</p>
         </div>
         <div className="row" style={{ marginTop: 28 }}>
-          <a className="btn btn--primary" href={wa(msg)} target="_blank" rel="noopener noreferrer">
-            Enviar el pedido por WhatsApp
+          <a
+            className="btn btn--primary"
+            href={wa(msg)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setEnviado(true)}
+          >
+            Consultar por WhatsApp
           </a>
           <button type="button" className="btn--quiet" onClick={back}>
             ← Corregir algo
           </button>
         </div>
+        {enviado && (
+          <p aria-live="polite" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--muted)', marginTop: 20 }}>
+            Se abrió WhatsApp en otra pestaña. Si no se abrió, llamanos al{' '}
+            <a href={BRAND.phoneHref}>{BRAND.phoneLabel}</a>.
+          </p>
+        )}
       </div>
     );
   }
@@ -142,7 +191,13 @@ export default function PresupuestoForm() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>¿Qué querés hacer?</h2>
             <div className="opts">
               {QUE.map((v) => (
-                <button key={v} type="button" className="opt" aria-pressed={budget.que === v} onClick={() => set({ que: v })}>
+                <button
+                  key={v}
+                  type="button"
+                  className="opt"
+                  aria-pressed={budget.que === v}
+                  onClick={() => set({ que: v, ...(v === SOLO_SUELOS ? { tipo: '', medida: '' } : {}) })}
+                >
                   {v}
                 </button>
               ))}
@@ -172,7 +227,9 @@ export default function PresupuestoForm() {
 
         {step === 3 && (
           <>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>¿Dónde y de qué tamaño?</h2>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>
+              ¿Dónde y de qué tamaño?
+            </h2>
             <div style={{ marginTop: 20 }}>
               <label className="field" style={{ marginBottom: 20 }}>
                 <span className="field__label">Zona o barrio</span>
@@ -185,22 +242,26 @@ export default function PresupuestoForm() {
                 />
               </label>
             </div>
-            <span className="form-label">Medida aproximada</span>
-            <div className="opts opts--row" style={{ marginBottom: 24, marginTop: 0 }}>
-              {MEDIDAS.map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  className="opt opt--sm"
-                  aria-pressed={budget.medida === v}
-                  onClick={() => set({ medida: v })}
-                >
-                  {v}
-                </button>
-              ))}
-            </div>
+            {budget.que !== SOLO_SUELOS && (
+              <>
+                <span className="form-label">Medida aproximada</span>
+                <div className="opts opts--row" style={{ marginBottom: 24, marginTop: 0 }}>
+                  {MEDIDAS.map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      className="opt opt--sm"
+                      aria-pressed={budget.medida === v}
+                      onClick={() => set({ medida: v })}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
             <span className="form-label">¿El terreno ya está preparado?</span>
-            <div className="opts opts--row" style={{ marginTop: 0 }}>
+            <div className="opts opts--row" style={{ marginTop: 0, marginBottom: 24 }}>
               {TERRENOS.map((v) => (
                 <button
                   key={v}
@@ -213,6 +274,15 @@ export default function PresupuestoForm() {
                 </button>
               ))}
             </div>
+            <label className="field">
+              <span className="field__label">Algo más que quieras contarnos (opcional)</span>
+              <textarea
+                rows={3}
+                value={budget.detalle}
+                onChange={(e) => set({ detalle: e.target.value })}
+                placeholder="Acceso para la máquina, plazos, solárium, lo que sea."
+              />
+            </label>
           </>
         )}
 
@@ -256,6 +326,12 @@ export default function PresupuestoForm() {
           </>
         )}
       </div>
+
+      {stepError && (
+        <p className="field__error" role="alert" style={{ marginTop: 20 }}>
+          {stepError}
+        </p>
+      )}
 
       <div className="wizard-foot">
         {step > 1 && (

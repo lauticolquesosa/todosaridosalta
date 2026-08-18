@@ -1100,7 +1100,14 @@ tbody tr:not(:last-child) td {
   padding: 14px 16px;
   transition: border-color 0.2s ease;
 }
-.field input:focus {
+.field textarea {
+  resize: vertical;
+  min-height: 96px;
+  font-family: inherit;
+  line-height: 1.6;
+}
+.field input:focus,
+.field textarea:focus {
   border-color: var(--ink);
 }
 .field input[aria-invalid='true'] {
