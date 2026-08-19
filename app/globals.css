@@ -46,6 +46,8 @@
 }
 
 html {
+  /* el rebote del scroll al final de la página muestra este color, no blanco */
+  background: var(--dark);
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
   -webkit-text-size-adjust: 100%;
@@ -54,6 +56,9 @@ html {
 body {
   background: var(--sand);
   color: var(--ink);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
@@ -1755,49 +1760,53 @@ tbody tr:not(:last-child) td {
 
 /* ---------------------------------------------------------------- misc */
 
-/* Banda de cierre: ocupa todo el ancho sobre el mismo fondo que la sección
-   de arriba. Es un solo enlace, así que responde entera al pasar el mouse:
-   el título se corre, la flecha avanza y una línea se dibuja de punta a
-   punta. Nada de tarjeta suelta en el medio. */
+/* Banda de cierre: fondo blanco y el pedido centrado en un solo renglón,
+   título y botón como una sola unidad. Sigue siendo un enlace entero, así
+   que responde completa al pasar el mouse. */
 .cta-final {
-  background: var(--sand-2);
+  background: #fff;
+  border-top: 1px solid var(--line);
 }
 .cta-final .wrap {
-  padding-top: clamp(48px, 7vw, 76px);
-  padding-bottom: clamp(48px, 7vw, 76px);
+  padding-top: clamp(44px, 6vw, 64px);
+  padding-bottom: clamp(44px, 6vw, 64px);
 }
 .cta-band {
   position: relative;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 28px;
   flex-wrap: wrap;
-  padding-bottom: clamp(24px, 3vw, 32px);
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: clamp(18px, 2.4vw, 24px);
   border-bottom: 1px solid var(--line);
   color: var(--ink);
+  text-align: center;
 }
 .cta-band__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(30px, 5.6vw, 60px);
-  line-height: 1.03;
-  letter-spacing: -0.02em;
-  max-width: 18ch;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
   transition: transform var(--t-mid) var(--ease);
 }
 .cta-band:hover .cta-band__title {
-  transform: translateX(6px);
+  transform: translateX(-4px);
 }
 .cta-band__cta {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 17px;
-  padding: 15px 26px;
+  font-size: 16px;
+  padding: 13px 24px;
   border-radius: var(--radius);
   background: var(--accent);
   color: var(--accent-ink);
@@ -1819,7 +1828,7 @@ tbody tr:not(:last-child) td {
 .cta-band:hover .cta-band__arrow {
   transform: translateX(5px);
 }
-/* la línea se dibuja de izquierda a derecha sobre el borde */
+/* la línea se dibuja desde el centro hacia los dos lados */
 .cta-band__line {
   position: absolute;
   left: 0;
@@ -1828,7 +1837,7 @@ tbody tr:not(:last-child) td {
   height: 1px;
   background: var(--ink);
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: center;
   transition: transform 0.5s var(--ease);
 }
 .cta-band:hover .cta-band__line,
@@ -1836,19 +1845,25 @@ tbody tr:not(:last-child) td {
   transform: scaleX(1);
 }
 
-@media (max-width: 700px) {
+/* en pantallas angostas el título ya no entra en un renglón: se apila */
+@media (max-width: 620px) {
   .cta-band {
-    align-items: stretch;
-    gap: 28px;
+    width: 100%;
+    flex-direction: column;
+    gap: 22px;
   }
   .cta-band__title {
-    max-width: none;
+    white-space: normal;
+    font-size: clamp(22px, 6vw, 26px);
+  }
+  .cta-band:hover .cta-band__title {
+    transform: none;
   }
   .cta-band__cta {
     justify-content: center;
     width: 100%;
-    font-size: 18px;
-    padding: 17px 24px;
+    font-size: 17px;
+    padding: 16px 24px;
   }
 }
 

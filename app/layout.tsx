@@ -119,7 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Saltar al contenido
         </a>
         <Header />
-        <main id="main" style={{ paddingTop: 'var(--header-h)' }}>
+        <main id="main" style={{ paddingTop: 'var(--header-h)', flex: '1 0 auto' }}>
           {children}
         </main>
         <Footer />
