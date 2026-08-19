@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { Archivo, Inter } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import WhatsAppFloat from '@/components/WhatsAppFloat';
 import Reveal from '@/components/Reveal';
 import { BRAND, SITE_URL } from '@/lib/site';
 import './globals.css';
@@ -123,7 +122,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <WhatsAppFloat />
         <Reveal />
         <script
           type="application/ld+json"
