@@ -157,9 +157,10 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------------------------------------------- cta */}
-      <section className="section--dark cta-final">
+      <section className="cta-final">
         <div className="wrap">
           <div className="cta-band reveal">
+            <span className="cta-band__rule" aria-hidden="true" />
             <h2 className="h2">Contanos dónde va la pileta</h2>
             <Link href="/presupuesto" className="btn btn--primary btn--lg">
               Pedir presupuesto

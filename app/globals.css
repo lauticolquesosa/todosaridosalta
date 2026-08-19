@@ -1755,34 +1755,45 @@ tbody tr:not(:last-child) td {
 
 /* ---------------------------------------------------------------- misc */
 
+/* Banda de cierre: sobre fondo claro, centrada y encuadrada, para que el
+   pedido de presupuesto se lea como el final de la página y no como una
+   sección más. El pie oscuro le da el contraste. */
+.cta-final {
+  background: var(--sand);
+}
+.cta-final .wrap {
+  padding-top: clamp(56px, 8vw, 88px);
+  padding-bottom: clamp(56px, 8vw, 88px);
+}
 .cta-band {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
+  text-align: center;
+  gap: 28px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 64px) clamp(24px, 5vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fff 0%, var(--sand) 100%);
+}
+.cta-band__rule {
+  width: 44px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
 }
 .cta-band h2 {
-  font-size: clamp(28px, 4.5vw, 44px);
-  line-height: 1.08;
-  color: #fff;
+  font-size: clamp(28px, 4.2vw, 40px);
+  line-height: 1.1;
+  color: var(--ink);
+  text-wrap: balance;
 }
-/* de escritorio para arriba el titulo entra entero en un renglon */
-@media (min-width: 1000px) {
-  .cta-band h2 {
-    white-space: nowrap;
-  }
+.cta-band .btn {
+  min-width: 220px;
 }
 
-/* La banda final y el pie comparten el fondo oscuro: se recorta el aire de
-   abajo y una linea fina los separa, en vez de dejar un hueco negro. */
-.cta-final .wrap {
-  padding-top: var(--sec-y);
-  padding-bottom: clamp(44px, 6vw, 60px);
-}
-.cta-final {
-  border-bottom: 1px solid rgba(244, 242, 238, 0.14);
-}
 .row {
   display: flex;
   flex-wrap: wrap;
