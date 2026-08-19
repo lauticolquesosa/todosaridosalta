@@ -1568,14 +1568,22 @@ tbody tr:not(:last-child) td {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 32px;
+  gap: 32px 40px;
+  flex-wrap: wrap;
+}
+/* La marca sube y las redes quedan colgadas debajo, como un solo bloque. */
+.footer__brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
 }
 .footer__side {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   text-align: right;
-  gap: 18px;
+  gap: 12px;
 }
 .footer__legal,
 .footer__links a {
@@ -1638,6 +1646,9 @@ tbody tr:not(:last-child) td {
   .footer__side {
     align-items: flex-start;
     text-align: left;
+  }
+  .footer__brand-col {
+    gap: 18px;
   }
   .footer__links {
     flex-direction: column;
