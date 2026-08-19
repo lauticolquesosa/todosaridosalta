@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ContactCards from '@/components/ContactCards';
 import { BRAND, wa } from '@/lib/site';
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__inner">
         <div className="footer__cols">
-          <div>
+          <div className="footer__brand">
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <Image src="/logo-mark.png" alt="" width={40} height={40} style={{ height: 40, width: 'auto' }} />
               <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: '#fff', lineHeight: 1.1 }}>
@@ -19,7 +20,7 @@ export default function Footer() {
             <p>Construcción de piscinas y movimiento de suelos en Salta. Hacemos el pozo y la pileta.</p>
           </div>
 
-          <div>
+          <div className="footer__col">
             <h3>Piscinas</h3>
             <ul>
               <li>
@@ -37,7 +38,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="footer__col">
             <h3>Empresa</h3>
             <ul>
               <li>
@@ -52,7 +53,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="footer__col">
             <h3>Contacto</h3>
             <ul>
               <li>
@@ -91,6 +92,8 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        <ContactCards items={['instagram', 'facebook', 'whatsapp']} className="footer__cards" />
 
         <div className="footer__bottom">
           <p>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import ContactCards from '@/components/ContactCards';
 import { BRAND } from '@/lib/site';
 
 const PISCINAS = [
@@ -207,10 +208,8 @@ export default function Header() {
             <Link href="/clubes-e-instituciones" className="menu__link" onClick={() => setMenuOpen(false)}>
               Clubes
             </Link>
-            <a href={BRAND.phoneHref} className="menu__tel">
-              {BRAND.phoneLabel}
-            </a>
           </nav>
+          <ContactCards items={['tel', 'whatsapp', 'instagram']} className="menu__cards" />
           <div className="menu__foot">
             <Link href="/presupuesto" className="btn btn--primary btn--block" onClick={() => setMenuOpen(false)}>
               Pedir presupuesto

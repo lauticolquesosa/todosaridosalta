@@ -758,8 +758,7 @@ ul {
 .menu__sub {
   animation: menuItemIn 0.35s var(--ease) both;
 }
-.menu__link + .menu__link,
-.menu__tel {
+.menu__link + .menu__link {
   border-top: 1px solid var(--line);
 }
 .menu__sub {
@@ -775,13 +774,6 @@ ul {
   font-size: 17px;
   color: var(--muted);
   padding: 10px 0;
-}
-.menu__tel {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 17px;
-  color: var(--muted);
-  padding: 14px 0;
 }
 .menu__foot {
   margin-top: auto;
@@ -861,12 +853,65 @@ ul {
   border-radius: var(--radius);
   overflow: hidden;
 }
+/* En mobile la foto deja de ser una columna y pasa a ser el fondo del hero,
+   con un velo oscuro encima para que el texto se lea igual de bien. */
 @media (max-width: 900px) {
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
   .hero__grid {
     grid-template-columns: 1fr;
+    min-height: min(88vh, 640px);
+    padding: clamp(56px, 10vh, 88px) 0 clamp(40px, 6vh, 56px);
   }
   .hero__media {
-    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    animation: heroMedia 1.2s var(--ease) both;
+  }
+  .hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(31, 33, 36, 0.9) 0%,
+      rgba(31, 33, 36, 0.76) 38%,
+      rgba(31, 33, 36, 0.88) 72%,
+      var(--dark) 100%
+    );
+  }
+  .hero__media img {
+    object-position: center 35%;
+  }
+  @keyframes heroMedia {
+    from {
+      opacity: 0;
+      transform: scale(1.06);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .hero__p {
+    max-width: 34ch;
+  }
+  .hero__stats {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hero__stats dt {
+    font-size: 17px;
+  }
+  .hero__stats dd {
+    font-size: 13px;
   }
 }
 
@@ -1599,6 +1644,43 @@ tbody tr:not(:last-child) td {
   gap: 20px;
   flex-wrap: wrap;
 }
+/* de escritorio para arriba las tarjetitas no hacen falta: ya está la columna
+   de contacto con todo escrito */
+.footer__cards {
+  display: none;
+}
+
+/* En el celular el pie se reduce a lo esencial: logo, tres accesos de
+   contacto y la línea legal. Las columnas de enlaces ya están en el menú. */
+@media (max-width: 900px) {
+  .footer__inner {
+    padding: clamp(36px, 8vw, 48px) var(--pad-x) 28px;
+  }
+  .footer__col {
+    display: none;
+  }
+  .footer__brand p {
+    display: none;
+  }
+  .footer__cols {
+    gap: 0;
+  }
+  .footer__cards {
+    display: grid;
+    margin-top: 24px;
+  }
+  .footer__bottom {
+    margin-top: 28px;
+    padding-top: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .footer__links {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
 
 /* --------------------------------------------------------- wa flotante */
 
@@ -1640,6 +1722,74 @@ tbody tr:not(:last-child) td {
   .wa-float {
     display: flex;
   }
+}
+
+/* ------------------------------------------------------- minicards */
+
+.minicards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.minicard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  text-align: center;
+  min-height: 88px;
+  padding: 14px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: transparent;
+  transition: border-color var(--t-mid) var(--ease), background var(--t-mid) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+.minicard:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+.minicard:active {
+  transform: translateY(0);
+}
+.minicard__icon {
+  display: inline-flex;
+  color: var(--accent);
+}
+.minicard__label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.1;
+}
+.minicard__sub {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  line-height: 1.1;
+}
+
+/* sobre fondo oscuro cambian los bordes, no el diseño */
+.on-dark .minicard,
+.footer .minicard {
+  border-color: rgba(244, 242, 238, 0.22);
+  color: var(--on-dark);
+}
+.on-dark .minicard:hover,
+.footer .minicard:hover {
+  border-color: rgba(244, 242, 238, 0.6);
+  background: rgba(244, 242, 238, 0.05);
+}
+.footer .minicard__sub,
+.on-dark .minicard__sub {
+  color: rgba(244, 242, 238, 0.55);
+}
+
+/* en el menú del celular van abajo de todo, pegadas al botón de presupuesto */
+.menu__cards {
+  margin-top: 20px;
 }
 
 /* ---------------------------------------------------------------- misc */

@@ -43,7 +43,7 @@ export default function HomePage() {
                 src="/img/hero.webp"
                 alt="Pileta terminada con solárium en una casa de Salta, al atardecer"
                 fill
-                sizes="(max-width: 900px) 0px, 42vw"
+                sizes="(max-width: 900px) 100vw, 42vw"
                 priority
                 style={{ objectFit: 'cover' }}
               />
