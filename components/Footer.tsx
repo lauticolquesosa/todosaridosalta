@@ -4,7 +4,7 @@ import ContactCards from '@/components/ContactCards';
 import { BRAND } from '@/lib/site';
 
 /**
- * Pie mínimo: a la izquierda la marca con los accesos a las redes debajo, a
+ * Pie mínimo: a la izquierda los accesos a las redes con la marca debajo, a
  * la derecha la línea legal. La navegación no se repite acá porque ya está
  * en el encabezado y en el menú del celular.
  */
@@ -16,6 +16,10 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__main">
           <div className="footer__brand-col">
+            <ContactCards
+              items={['instagram', 'facebook', 'whatsapp']}
+              className="minicards--sm footer__cards"
+            />
             <Link href="/" className="footer__brand" aria-label={`${BRAND.name}, inicio`}>
               <Image src="/logo-mark.png" alt="" width={52} height={52} style={{ height: 52, width: 'auto' }} />
               <span className="footer__brand-name">
@@ -23,10 +27,6 @@ export default function Footer() {
                 <span className="footer__brand-sub">{BRAND.sub}</span>
               </span>
             </Link>
-            <ContactCards
-              items={['instagram', 'facebook', 'whatsapp']}
-              className="minicards--sm footer__cards"
-            />
           </div>
 
           <div className="footer__side">
