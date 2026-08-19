@@ -1573,7 +1573,8 @@ tbody tr:not(:last-child) td {
 .footer__side {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
+  text-align: right;
   gap: 18px;
 }
 .footer__legal,
@@ -1586,6 +1587,7 @@ tbody tr:not(:last-child) td {
 .footer__links {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px 20px;
 }
 .footer__links a {
@@ -1625,15 +1627,21 @@ tbody tr:not(:last-child) td {
   margin-top: 3px;
 }
 
-/* En el celular se apila: primero la marca, después redes y línea legal. */
+/* En el celular se apila: primero la marca, después redes y línea legal,
+   todo alineado a la izquierda. */
 @media (max-width: 700px) {
   .footer__main {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
     gap: 28px;
   }
+  .footer__side {
+    align-items: flex-start;
+    text-align: left;
+  }
   .footer__links {
     flex-direction: column;
+    justify-content: flex-start;
     gap: 10px;
   }
 }
