@@ -159,13 +159,16 @@ export default function HomePage() {
       {/* ---------------------------------------------------------------- cta */}
       <section className="cta-final">
         <div className="wrap">
-          <div className="cta-band reveal">
-            <span className="cta-band__rule" aria-hidden="true" />
-            <h2 className="h2">Contanos dónde va la pileta</h2>
-            <Link href="/presupuesto" className="btn btn--primary btn--lg">
+          <Link href="/presupuesto" className="cta-band reveal">
+            <h2 className="cta-band__title">Contanos dónde va la pileta</h2>
+            <span className="cta-band__cta">
               Pedir presupuesto
-            </Link>
-          </div>
+              <span className="cta-band__arrow" aria-hidden="true">
+                →
+              </span>
+            </span>
+            <span className="cta-band__line" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </>
