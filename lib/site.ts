@@ -13,7 +13,7 @@ export const BRAND = {
   region: 'Salta',
   country: 'AR',
   founded: '2020',
-  agency: { name: 'LCS DESING', url: 'https://lcsdesign.vercel.app/' },
+  agency: { name: 'LCS DESIGN', url: 'https://lcsdesign.vercel.app/' },
 } as const;
 
 export function wa(text: string): string {

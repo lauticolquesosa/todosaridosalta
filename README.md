@@ -2,7 +2,7 @@
 
 Sitio institucional de **Todo Áridos Salta**: construcción de piscinas de hormigón y de fibra de vidrio, venta de áridos y movimiento de suelos en Salta, Argentina.
 
-Construido por [LCS DESING](https://lcsdesign.vercel.app/).
+Construido por [LCS DESIGN](https://lcsdesign.vercel.app/).
 
 ---
 
