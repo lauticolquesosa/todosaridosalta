@@ -3,6 +3,7 @@ import { Familjen_Grotesk, IBM_Plex_Sans } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Reveal from '@/components/Reveal';
+import SmoothScroll from '@/components/SmoothScroll';
 import { BRAND, SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <Reveal />
+        <SmoothScroll />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

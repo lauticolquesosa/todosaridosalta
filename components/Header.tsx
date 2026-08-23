@@ -153,7 +153,7 @@ export default function Header() {
       </header>
 
       {menuOpen && (
-        <div className="menu" role="dialog" aria-modal="true" aria-label="Menú">
+        <div className="menu" role="dialog" aria-modal="true" aria-label="Menú" data-lenis-prevent>
           <div className="menu__top">
             <span className="brand__name">
               {BRAND.name}

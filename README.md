@@ -13,6 +13,7 @@ Construido por [LCS DESIGN](https://lcsdesign.vercel.app/).
 | Framework | Next.js 16 · App Router · React 19 |
 | Lenguaje | TypeScript en modo estricto |
 | Estilos | CSS propio con tokens (`app/globals.css`), sin dependencias de UI |
+| Scroll | Lenis, la única dependencia de runtime del sitio |
 | Tipografías | Familjen Grotesk 600 para títulos + IBM Plex Sans para texto, vía `next/font` (self-hosted, sin request a Google en runtime) |
 | Imágenes | `next/image` sobre WebP, con AVIF/WebP servidos según el navegador |
 | Deploy | Vercel (cero configuración) |
@@ -93,6 +94,8 @@ Todo sale de las variables de `app/globals.css`. Las tres decisiones que ordenan
 - **Forma.** Un solo radio de 2 píxeles para botones, campos, tarjetas y fotos. El espaciado sale de una escala de múltiplos de cuatro y se pide por variable o por clase, nunca a mano.
 
 El movimiento es una sola cosa repetida: los bloques entran con un desplazamiento corto y opacidad, una vez, escalonando hasta cinco hermanos. Se anima solo `transform` y `opacity`, y `prefers-reduced-motion` lo apaga entero.
+
+El scroll va suavizado con Lenis (`components/SmoothScroll.tsx`), con `lerp` en 0.09. Es la única dependencia de runtime y está justificada: un suavizado propio que aguante rueda, trackpad, teclado y barra de scroll es bastante más que las veinte líneas a partir de las cuales conviene escribirlo uno mismo. En táctil no se toca nada, manda el scroll del sistema, y con `prefers-reduced-motion` no se instancia.
 
 ## Notas técnicas
 
