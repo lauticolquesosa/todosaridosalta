@@ -120,7 +120,11 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  /* `clip` corta el desborde sin volver al body un contenedor de scroll, que
+     es lo que pelearía con el scroll suavizado. `hidden` queda de reserva para
+     los navegadores viejos que no entienden `clip`. */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -32,6 +32,9 @@ export default function SmoothScroll() {
       lerp: LERP,
       wheelMultiplier: 1,
       syncTouch: false,
+      // sin esto Lenis captura la rueda pero nunca avanza el scroll: su bucle
+      // de render no arranca solo. Solo va en false si otro ticker lo maneja.
+      autoRaf: true,
     });
 
     // si la preferencia cambia con el sitio abierto, el scroll vuelve al nativo
