@@ -654,6 +654,9 @@ table {
 .menu__nav {
   display: flex;
   flex-direction: column;
+  /* ocupa el alto que sobra entre la marca y el pie del menú, para que no
+     quede un hueco muerto en el medio de la pantalla */
+  flex: 1;
   padding-top: var(--s-6);
 }
 .menu__link {
@@ -661,7 +664,11 @@ table {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 60px;
+  /* los enlaces se reparten el espacio libre; si el acordeón se abre y falta
+     lugar, vuelven a su alto mínimo y el menú scrollea */
+  flex: 1 1 auto;
+  min-height: 64px;
+  max-height: 108px;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(28px, 8vw, 36px);
@@ -678,6 +685,7 @@ table {
 .menu__sub {
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
   padding: var(--s-2) 0 var(--s-4);
   border-bottom: 1px solid var(--line-dark);
 }
@@ -689,31 +697,49 @@ table {
   color: var(--on-dark-muted);
 }
 
-.menu__cards {
-  margin-top: var(--s-8);
-}
 .menu__foot {
-  margin-top: auto;
-  padding-top: var(--s-8);
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+  padding-top: var(--s-10);
+}
+.menu__foot .btn {
+  width: 100%;
+}
+.menu__tel {
+  font-size: var(--fs-sm);
+  color: var(--on-dark-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ==========================================================================
    Tarjetas de contacto
+   Cuadradas y chicas, en fila. El ancho máximo del contenedor es lo que las
+   mantiene chicas: sin él se estirarían con la pantalla y dejarían de ser
+   cuadradas. Mismo tamaño en el pie y en el menú del celular.
    ========================================================================== */
 
 .minicards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* medida fija: así el cuadrado es el mismo en el pie y en el menú, y no
+     depende del ancho que tengan los elementos de al lado */
+  grid-template-columns: repeat(3, 84px);
   gap: var(--s-2);
 }
 .minicard {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: var(--s-4);
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  aspect-ratio: 1;
+  /* poco relleno lateral: el contenido va centrado y las etiquetas más largas
+     necesitan el ancho */
+  padding: var(--s-2) var(--s-1);
   border: 1px solid var(--line-dark);
   border-radius: var(--radius);
   color: var(--on-dark);
+  text-align: center;
   transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
 }
 .minicard:hover {
@@ -722,19 +748,10 @@ table {
 }
 .minicard__icon {
   color: var(--accent);
-  margin-bottom: var(--s-2);
 }
 .minicard__label {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-}
-.minicard__sub {
   font-size: var(--fs-xs);
-  color: var(--on-dark-muted);
-  font-variant-numeric: tabular-nums;
-}
-.minicards--sm .minicard {
-  padding: var(--s-3);
+  font-weight: 500;
 }
 
 /* ==========================================================================
@@ -1492,9 +1509,6 @@ figcaption {
   justify-content: space-between;
   gap: var(--s-12);
 }
-.footer__cards {
-  max-width: 420px;
-}
 .footer__brand {
   display: inline-flex;
   align-items: center;
@@ -1655,9 +1669,6 @@ figcaption {
   .cta-band__cta {
     margin-top: var(--s-8);
   }
-  .minicards {
-    grid-template-columns: 1fr;
-  }
   .btn {
     width: 100%;
   }
@@ -1669,6 +1680,18 @@ figcaption {
   .step {
     grid-template-columns: 40px 1fr;
     gap: var(--s-4);
+  }
+
+  /* el pie se comprime: sin la columna de al lado, los bloques ya se separan
+     solos y no hace falta el aire del escritorio */
+  .footer {
+    padding-block: var(--s-12) var(--s-8);
+  }
+  .footer__main {
+    gap: var(--s-8);
+  }
+  .footer__brand {
+    margin-top: var(--s-6);
   }
 }
 

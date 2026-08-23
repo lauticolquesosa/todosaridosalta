@@ -187,12 +187,14 @@ export default function Header() {
             ))}
           </nav>
 
-          <ContactCards items={['tel', 'whatsapp', 'instagram']} className="menu__cards" />
-
           <div className="menu__foot">
+            <ContactCards items={['whatsapp', 'instagram', 'facebook']} />
             <Link href="/presupuesto" className="btn btn--primary btn--block">
               Pedir presupuesto
             </Link>
+            <a href={BRAND.phoneHref} className="menu__tel">
+              Llamá al {BRAND.phoneLabel}
+            </a>
           </div>
         </div>
       )}

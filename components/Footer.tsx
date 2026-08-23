@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="wrap wrap--wide">
         <div className="footer__main">
           <div>
-            <ContactCards items={['whatsapp', 'instagram', 'facebook']} className="minicards--sm footer__cards" />
+            <ContactCards items={['whatsapp', 'instagram', 'facebook']} />
             <Link href="/" className="footer__brand" aria-label={`${BRAND.name}, inicio`}>
               <Image src="/logo-mark.png" alt="" width={48} height={48} />
               <span className="footer__brand-name">
