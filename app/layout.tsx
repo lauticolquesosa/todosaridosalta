@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from 'next';
-import { Chivo, IBM_Plex_Sans } from 'next/font/google';
+import { Familjen_Grotesk, IBM_Plex_Sans } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Reveal from '@/components/Reveal';
 import { BRAND, SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const chivo = Chivo({
+const grotesk = Familjen_Grotesk({
   subsets: ['latin'],
-  weight: ['900'],
-  variable: '--font-chivo',
+  weight: ['600'],
+  variable: '--font-grotesk',
   display: 'swap',
 });
 
@@ -106,7 +106,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-AR" className={`${chivo.variable} ${plex.variable}`}>
+    <html lang="es-AR" className={`${grotesk.variable} ${plex.variable}`}>
       <body>
         <a className="skip" href="#main">
           Saltar al contenido

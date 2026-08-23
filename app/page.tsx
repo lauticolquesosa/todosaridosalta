@@ -26,20 +26,6 @@ export default function HomePage() {
                 Pedir presupuesto
               </Link>
             </div>
-            <dl className="hero__stats">
-              <div>
-                <dt className="is-accent">2020</dt>
-                <dd>Construyendo piletas en Salta desde entonces</dd>
-              </div>
-              <div>
-                <dt>San Lorenzo y Salta capital</dt>
-                <dd>Donde están las obras que ya entregamos</dd>
-              </div>
-              <div>
-                <dt>Equipos propios</dt>
-                <dd>De movimiento de suelo, nada tercerizado</dd>
-              </div>
-            </dl>
           </div>
         </div>
       </section>

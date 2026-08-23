@@ -13,7 +13,7 @@ Construido por [LCS DESIGN](https://lcsdesign.vercel.app/).
 | Framework | Next.js 16 · App Router · React 19 |
 | Lenguaje | TypeScript en modo estricto |
 | Estilos | CSS propio con tokens (`app/globals.css`), sin dependencias de UI |
-| Tipografías | Chivo 900 para títulos + IBM Plex Sans para texto, vía `next/font` (self-hosted, sin request a Google en runtime) |
+| Tipografías | Familjen Grotesk 600 para títulos + IBM Plex Sans para texto, vía `next/font` (self-hosted, sin request a Google en runtime) |
 | Imágenes | `next/image` sobre WebP, con AVIF/WebP servidos según el navegador |
 | Deploy | Vercel (cero configuración) |
 
@@ -89,7 +89,7 @@ Después, en Vercel: **Add New → Project → importar el repo**. Framework det
 Todo sale de las variables de `app/globals.css`. Las tres decisiones que ordenan el resto:
 
 - **Color.** Base de hormigón claro y frío, con bandas grafito que marcan el ritmo entre secciones. La paleta sale del material con el que trabaja el cliente. Un solo acento, el naranja del logo, y siempre marca la acción: relleno de botón sobre fondo claro, texto y línea sobre grafito.
-- **Tipografía.** Dos familias. Chivo en un solo peso, el 900, para los títulos grandes, alineados a la izquierda y con el tracking cerrado. IBM Plex Sans para todo el texto y la interfaz. La escala es fluida con `clamp()` y se respeta en todo el sitio.
+- **Tipografía.** Dos familias. Familjen Grotesk en un solo peso, el 600, para los títulos grandes, alineados a la izquierda y con el tracking cerrado. Es una grotesca angosta, así que la presencia la da el tamaño y no el grosor. IBM Plex Sans para todo el texto y la interfaz. La escala es fluida con `clamp()` y se respeta en todo el sitio.
 - **Forma.** Un solo radio de 2 píxeles para botones, campos, tarjetas y fotos. El espaciado sale de una escala de múltiplos de cuatro y se pide por variable o por clase, nunca a mano.
 
 El movimiento es una sola cosa repetida: los bloques entran con un desplazamiento corto y opacidad, una vez, escalonando hasta cinco hermanos. Se anima solo `transform` y `opacity`, y `prefers-reduced-motion` lo apaga entero.

@@ -8,8 +8,10 @@
    2. Un solo acento, el naranja del logo, y marca la acción. Sobre claro va
       como relleno de botón, porque como texto no llega al contraste. Sobre
       grafito sí puede ir como texto y como línea.
-   3. La apuesta fuerte son los títulos: Chivo 900, grandes, a la izquierda,
-      con tracking cerrado. Todo lo demás se comporta.
+   3. La apuesta fuerte son los títulos: Familjen Grotesk 600, grandes, a la
+      izquierda, con tracking cerrado. Es una grotesca angosta, así que el
+      tamaño da presencia sin que la letra se ponga pesada. Todo lo demás se
+      comporta.
    ========================================================================== */
 
 :root {
@@ -50,7 +52,7 @@
   --radius: 2px;
 
   /* --- tipografía ------------------------------------------------------- */
-  --font-display: var(--font-chivo), 'Chivo', system-ui, sans-serif;
+  --font-display: var(--font-grotesk), 'Familjen Grotesk', system-ui, sans-serif;
   --font-body: var(--font-plex), 'IBM Plex Sans', system-ui, sans-serif;
 
   --fs-display: clamp(46px, 8.6vw, 108px);
@@ -62,8 +64,8 @@
   --fs-sm: 15px;
   --fs-xs: 13px;
 
-  --track-display: -0.035em;
-  --track-h: -0.025em;
+  --track-display: -0.03em;
+  --track-h: -0.02em;
 
   /* --- movimiento ------------------------------------------------------- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -238,8 +240,8 @@ table {
 .h2,
 .display {
   font-family: var(--font-display);
-  font-weight: 900;
-  line-height: 0.98;
+  font-weight: 600;
+  line-height: 1;
   letter-spacing: var(--track-h);
   text-wrap: balance;
 }
@@ -468,7 +470,7 @@ table {
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: 15px;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -641,7 +643,7 @@ table {
   width: 100%;
   min-height: 60px;
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: clamp(28px, 8vw, 36px);
   letter-spacing: var(--track-h);
   text-align: left;
@@ -749,7 +751,7 @@ table {
 .hero__inner {
   position: relative;
   width: 100%;
-  padding-block: calc(var(--header-h) + var(--s-16)) var(--s-12);
+  padding-block: calc(var(--header-h) + var(--s-16)) var(--s-16);
 }
 .hero__title {
   max-width: 15ch;
@@ -763,37 +765,6 @@ table {
 }
 .hero__cta {
   margin-top: var(--s-10);
-}
-
-.hero__stats {
-  margin-top: var(--s-16);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid rgba(238, 240, 240, 0.24);
-}
-.hero__stats > div {
-  padding: var(--s-5) var(--s-6) 0 0;
-}
-.hero__stats > div + div {
-  padding-left: var(--s-6);
-  border-left: 1px solid rgba(238, 240, 240, 0.24);
-}
-.hero__stats dt {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(17px, 1.7vw, 22px);
-  letter-spacing: var(--track-h);
-  line-height: 1.15;
-}
-.hero__stats dd {
-  margin-top: var(--s-2);
-  font-size: var(--fs-sm);
-  line-height: 1.45;
-  color: var(--on-dark-muted);
-  max-width: 26ch;
-}
-.is-accent {
-  color: var(--accent);
 }
 
 /* ==========================================================================
@@ -947,7 +918,7 @@ figcaption {
 }
 .panel h3 {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: clamp(24px, 2.8vw, 34px);
   letter-spacing: var(--track-h);
 }
@@ -1058,7 +1029,7 @@ figcaption {
 }
 .step__n {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: 22px;
   color: var(--accent);
   letter-spacing: var(--track-h);
@@ -1232,9 +1203,9 @@ figcaption {
 }
 .cta-band__title {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: clamp(32px, 5.4vw, 68px);
-  line-height: 0.98;
+  line-height: 1;
   letter-spacing: var(--track-h);
   max-width: 16ch;
 }
@@ -1514,7 +1485,7 @@ figcaption {
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: 19px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -1645,21 +1616,6 @@ figcaption {
 @media (max-width: 720px) {
   .hero {
     min-height: 92svh;
-  }
-  .hero__stats {
-    grid-template-columns: 1fr;
-    margin-top: var(--s-12);
-  }
-  .hero__stats > div {
-    padding: var(--s-4) 0;
-    border-bottom: 1px solid rgba(238, 240, 240, 0.24);
-  }
-  .hero__stats > div + div {
-    padding-left: 0;
-    border-left: none;
-  }
-  .hero__stats dd {
-    max-width: none;
   }
   .cards,
   .pillars,
