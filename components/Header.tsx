@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,6 +11,13 @@ import { BRAND, NAV, PISCINAS_NAV } from '@/lib/site';
  * Cabecera fija. En la portada arranca transparente sobre el hero oscuro y se
  * vuelve sólida al scrollear. En el resto de las páginas es sólida siempre,
  * porque abajo hay fondo claro. Se esconde al bajar y vuelve al subir.
+ *
+ * El menú del celular es un `dialog` abierto con `showModal`, no un div. Eso
+ * trae resueltas de fábrica las cuatro cosas que un menú a pantalla completa
+ * tiene que cumplir y que a mano suelen quedar a medias: el foco no se escapa
+ * a la página de atrás, Escape cierra, al cerrar el foco vuelve al botón que
+ * lo abrió, y el panel se dibuja en la capa superior sin pelear con ningún
+ * z-index. La entrada y la salida las anima el CSS.
  */
 export default function Header() {
   const pathname = usePathname();
@@ -22,6 +29,7 @@ export default function Header() {
   const [accOpen, setAccOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
   const dropRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDialogElement>(null);
 
   // Un solo listener de scroll, dentro de un rAF, para no trabar el hilo.
   useEffect(() => {
@@ -51,11 +59,32 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [menuOpen]);
 
+  const openMenu = () => {
+    setAccOpen(false);
+    setMenuOpen(true);
+    menuRef.current?.showModal();
+  };
+
+  /**
+   * El estado lo sincroniza el evento `close`, así que Escape, el botón de
+   * cerrar y la navegación terminan todos en el mismo lugar.
+   */
+  const closeMenu = useCallback(() => {
+    menuRef.current?.close();
+  }, []);
+
+  useEffect(() => {
+    const dialog = menuRef.current;
+    if (!dialog) return;
+    const onClose = () => setMenuOpen(false);
+    dialog.addEventListener('close', onClose);
+    return () => dialog.removeEventListener('close', onClose);
+  }, []);
+
+  // el desplegable del escritorio no es modal, se cierra a mano
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      setMenuOpen(false);
-      setDropOpen(false);
+      if (e.key === 'Escape') setDropOpen(false);
     };
     const onClick = (e: MouseEvent) => {
       if (dropRef.current && !dropRef.current.contains(e.target as Node)) setDropOpen(false);
@@ -69,10 +98,9 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
+    closeMenu();
     setDropOpen(false);
-    setAccOpen(false);
-  }, [pathname]);
+  }, [pathname, closeMenu]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -82,7 +110,7 @@ export default function Header() {
   }, [menuOpen]);
 
   const solid = scrolled || !isHome;
-  const active = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+  const active = (href: string) => pathname.startsWith(href);
 
   return (
     <>
@@ -143,7 +171,7 @@ export default function Header() {
             className="burger mobile-only"
             aria-label="Abrir menú"
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(true)}
+            onClick={openMenu}
           >
             <span />
             <span />
@@ -152,23 +180,51 @@ export default function Header() {
         </div>
       </header>
 
-      {menuOpen && (
-        <div className="menu" role="dialog" aria-modal="true" aria-label="Menú" data-lenis-prevent>
-          <div className="menu__top">
-            <span className="brand__name">
-              {BRAND.name}
-              <span className="brand__sub">{BRAND.sub}</span>
-            </span>
-            <button type="button" className="menu__close" aria-label="Cerrar menú" onClick={() => setMenuOpen(false)}>
-              ✕
-            </button>
-          </div>
+      <dialog className="menu" ref={menuRef} aria-label="Menú" data-lenis-prevent>
+        <div className="menu__top">
+          <span className="brand__name">
+            {BRAND.name}
+            <span className="brand__sub">{BRAND.sub}</span>
+          </span>
+          <button type="button" className="menu__close" aria-label="Cerrar menú" onClick={closeMenu}>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
 
-          <nav className="menu__nav" aria-label="Menú móvil">
-            <button type="button" className="menu__link" aria-expanded={accOpen} onClick={() => setAccOpen((v) => !v)}>
+        <nav className="menu__nav" aria-label="Menú del celular">
+          <div className="menu__group">
+            <button
+              type="button"
+              className="menu__link"
+              data-active={pathname.startsWith('/piscinas')}
+              aria-expanded={accOpen}
+              onClick={() => setAccOpen((v) => !v)}
+            >
               Piscinas
               <span className="menu__toggle" aria-hidden="true">
-                {accOpen ? '–' : '+'}
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                >
+                  <path d="M5 12h14" />
+                  <path className="menu__toggle-bar" d="M12 5v14" />
+                </svg>
               </span>
             </button>
             {accOpen && (
@@ -180,24 +236,25 @@ export default function Header() {
                 ))}
               </div>
             )}
-            {NAV.map((i) => (
-              <Link key={i.href} href={i.href} className="menu__link">
-                {i.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="menu__foot">
-            <ContactCards items={['whatsapp', 'instagram', 'facebook']} />
-            <Link href="/presupuesto" className="btn btn--primary btn--block">
-              Pedir presupuesto
-            </Link>
-            <a href={BRAND.phoneHref} className="menu__tel">
-              Llamá al {BRAND.phoneLabel}
-            </a>
           </div>
+
+          {NAV.map((i) => (
+            <Link key={i.href} href={i.href} className="menu__link" data-active={active(i.href)}>
+              {i.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="menu__foot">
+          <ContactCards items={['whatsapp', 'instagram', 'facebook']} />
+          <Link href="/presupuesto" className="btn btn--primary btn--block">
+            Pedir presupuesto
+          </Link>
+          <a href={BRAND.phoneHref} className="menu__tel">
+            Llamá al {BRAND.phoneLabel}
+          </a>
         </div>
-      )}
+      </dialog>
     </>
   );
 }

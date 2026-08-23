@@ -72,6 +72,7 @@
   --t-fast: 0.18s;
   --t-mid: 0.3s;
   --t-slow: 0.56s;
+  --t-menu: 0.42s;
 }
 
 /* ==========================================================================
@@ -624,16 +625,89 @@ table {
    Menú de celular
    ========================================================================== */
 
+/* El panel es un `dialog` modal, así que vive en la capa superior y no hace
+   falta z-index. Se revela cortando desde arriba con clip-path, que no
+   recalcula layout, y se cierra con la misma animación: eso lo permiten
+   `overlay` y `display` con allow-discrete, que mantienen el panel visible
+   mientras dura la salida. Sin esos dos, al cerrar desaparecería de golpe. */
 .menu {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0 var(--pad-x) var(--s-8);
+  border: none;
   background: var(--dark);
   color: var(--on-dark);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--t-menu) var(--ease), overlay var(--t-menu) var(--ease) allow-discrete,
+    display var(--t-menu) var(--ease) allow-discrete;
+}
+.menu[open] {
   display: flex;
   flex-direction: column;
-  padding: 0 var(--pad-x) var(--s-8);
-  overflow-y: auto;
+  clip-path: inset(0 0 0 0);
+}
+@starting-style {
+  .menu[open] {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+.menu::backdrop {
+  background: rgba(10, 13, 14, 0.7);
+  opacity: 0;
+  transition: opacity var(--t-menu) var(--ease), overlay var(--t-menu) var(--ease) allow-discrete,
+    display var(--t-menu) var(--ease) allow-discrete;
+}
+.menu[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .menu[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* El contenido entra escalonado detrás del panel. Se anima solo opacidad y
+   desplazamiento, y arranca cuando el revelado ya avanzó. */
+@keyframes menu-entra {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+}
+.menu[open] .menu__nav > *,
+.menu[open] .menu__foot > * {
+  animation: menu-entra 520ms var(--ease) backwards;
+  animation-delay: var(--entra, 140ms);
+}
+/* La secuencia va escrita entera y no calculada sobre un índice heredado: el
+   pie es otro contenedor, así que un índice compartido se le reiniciaba y las
+   tarjetas terminaban entrando después del teléfono. */
+.menu__nav > *:nth-child(1) {
+  --entra: 140ms;
+}
+.menu__nav > *:nth-child(2) {
+  --entra: 200ms;
+}
+.menu__nav > *:nth-child(3) {
+  --entra: 260ms;
+}
+.menu__nav > *:nth-child(4) {
+  --entra: 320ms;
+}
+.menu__foot > *:nth-child(1) {
+  --entra: 380ms;
+}
+.menu__foot > *:nth-child(2) {
+  --entra: 430ms;
+}
+.menu__foot > *:nth-child(3) {
+  --entra: 480ms;
 }
 
 .menu__top {
@@ -644,11 +718,16 @@ table {
   border-bottom: 1px solid var(--line-dark);
 }
 .menu__close {
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
   margin-right: -10px;
-  font-size: 20px;
-  line-height: 1;
+  color: var(--on-dark);
+  transition: color var(--t-fast) var(--ease);
+}
+.menu__close:hover {
+  color: var(--accent);
 }
 
 .menu__nav {
@@ -659,16 +738,26 @@ table {
   flex: 1;
   padding-top: var(--s-6);
 }
+/* El acordeón va envuelto para que la navegación tenga siempre cuatro hijos y
+   el escalonado no se corra al abrirlo. El envoltorio crece igual que un
+   enlace suelto, si no la primera fila se quedaría corta y sobraría un hueco
+   al final de la lista. */
+.menu__group {
+  display: flex;
+  flex-direction: column;
+  /* base cero en las cuatro filas: si la base sale del contenido, la fila del
+     acordeón arranca más alta que las otras y quedan desparejas */
+  flex: 1 1 0;
+}
 .menu__link {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  /* los enlaces se reparten el espacio libre; si el acordeón se abre y falta
-     lugar, vuelven a su alto mínimo y el menú scrollea */
-  flex: 1 1 auto;
+  /* las filas se reparten el alto libre; si el acordeón se abre y falta lugar,
+     vuelven a su alto mínimo y el menú scrollea */
+  flex: 1 1 0;
   min-height: 64px;
-  max-height: 108px;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(28px, 8vw, 36px);
@@ -677,10 +766,25 @@ table {
   border-bottom: 1px solid var(--line-dark);
 }
 .menu__toggle {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 22px;
+  display: grid;
+  place-items: center;
   color: var(--on-dark-muted);
+  transition: transform var(--t-mid) var(--ease);
+}
+.menu__toggle-bar {
+  transform-origin: center;
+  transition: transform var(--t-mid) var(--ease), opacity var(--t-mid) var(--ease);
+}
+/* el signo gira y la barra vertical se recoge: el más se vuelve un menos */
+.menu__link[aria-expanded='true'] .menu__toggle {
+  transform: rotate(180deg);
+}
+.menu__link[aria-expanded='true'] .menu__toggle-bar {
+  transform: scaleY(0);
+  opacity: 0;
+}
+.menu__link[data-active='true'] {
+  color: var(--accent);
 }
 .menu__sub {
   display: flex;
@@ -1591,6 +1695,10 @@ figcaption {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    /* los retardos también se anulan: con entradas escalonadas y duración
+       cero, un retardo sin tocar dejaría el contenido invisible ese rato */
+    animation-delay: 0ms !important;
+    transition-delay: 0ms !important;
   }
 }
 
