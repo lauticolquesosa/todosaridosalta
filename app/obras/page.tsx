@@ -11,14 +11,16 @@ export const metadata: Metadata = {
 
 export default function ObrasPage() {
   return (
-    <section style={{ paddingTop: 'var(--sec-y-sm)', paddingBottom: 'var(--sec-y)' }}>
-      <div className="wrap">
-        <Crumbs items={[{ label: 'Obras' }]} />
-        <h1 className="h1">Piletas que ya están llenas</h1>
-        <p className="lead" style={{ marginTop: 20, maxWidth: '60ch' }}>
-          Cada obra abre con el par del terreno excavado y la pileta terminada. Filtrá por tipo de construcción y por
-          zona.
-        </p>
+    <section className="section--first">
+      <div className="wrap wrap--wide">
+        <div className="phead">
+          <Crumbs items={[{ label: 'Obras' }]} />
+          <h1 className="h1">Piletas que ya están llenas</h1>
+          <p className="lead phead__lead">
+            Cada obra abre con el par del terreno excavado y la pileta terminada. Filtrá por tipo de construcción y por
+            zona.
+          </p>
+        </div>
         <ObrasFiltradas />
       </div>
     </section>

@@ -48,16 +48,15 @@ export default async function TipoPage({ params }: Props) {
 
   return (
     <>
-      <section style={{ paddingTop: 'var(--sec-y-sm)', paddingBottom: 'var(--sec-y-sm)' }}>
-        <div className="wrap wrap--narrow">
-          <Crumbs items={[{ label: 'Piscinas', href: '/piscinas' }, { label: t.crumb }]} />
-          <h1 className="h1" style={{ maxWidth: '18ch' }}>
-            {t.h1}
-          </h1>
-          <p className="lead" style={{ marginTop: 24 }}>
-            {t.intro}
-          </p>
-          <div className="frame" style={{ marginTop: 40 }}>
+      <section className="section--first-sm">
+        <div className="wrap wrap--wide">
+          <div className="phead">
+            <Crumbs items={[{ label: 'Piscinas', href: '/piscinas' }, { label: t.crumb }]} />
+            <h1 className="h1">{t.h1}</h1>
+            <p className="lead phead__lead">{t.intro}</p>
+          </div>
+
+          <div className="frame mt-12">
             <Image
               src={t.proceso}
               alt={
@@ -66,15 +65,15 @@ export default async function TipoPage({ params }: Props) {
                   : 'Casco de fibra de vidrio siendo colocado en el pozo'
               }
               fill
-              sizes="(max-width: 1000px) 100vw, 1000px"
+              sizes="(max-width: 1440px) 100vw, 1440px"
               priority
             />
           </div>
         </div>
       </section>
 
-      <section className="section--alt" style={{ paddingTop: 'var(--sec-y-sm)', paddingBottom: 'var(--sec-y-sm)' }}>
-        <div className="wrap wrap--narrow">
+      <section className="section--sm section--dark">
+        <div className="wrap wrap--tight">
           <h2 className="h2 h2--sm reveal">Cómo lo hacemos, paso a paso</h2>
           <div className="steps">
             {t.pasos.map((p) => (
@@ -90,20 +89,21 @@ export default async function TipoPage({ params }: Props) {
         </div>
       </section>
 
-      <section style={{ paddingTop: 'var(--sec-y-sm)', paddingBottom: 'var(--sec-y-sm)' }}>
-        <div className="wrap wrap--narrow">
+      <section className="section">
+        <div className="wrap wrap--wide">
           <div className="head-row reveal">
             <h2 className="h2 h2--sm">{t.obrasTitle}</h2>
             <Link href="/obras" className="lnk">
-              Ver todas las obras →
+              Ver todas las obras
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div className="cards cards--tight">
+          <div className="cards">
             {obras.map((o) => (
               <ObraCard key={o.slug} obra={o} />
             ))}
           </div>
-          <div className="mt-44">
+          <div className="row">
             <Link href={t.presupuestoHref} className="btn btn--primary">
               Pedir presupuesto
             </Link>
@@ -111,7 +111,7 @@ export default async function TipoPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="section--alt" style={{ paddingTop: 'var(--sec-y-sm)', paddingBottom: 'var(--sec-y-sm)' }}>
+      <section className="section--sm section--alt">
         <div className="wrap wrap--tight">
           <h2 className="h2 h2--sm reveal">Preguntas frecuentes</h2>
           <div className="faq">

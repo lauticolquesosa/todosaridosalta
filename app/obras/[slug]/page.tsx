@@ -41,35 +41,37 @@ export default async function ObraPage({ params }: Props) {
   if (!o) notFound();
 
   const nx = nextObra(o.slug);
+  const presupuesto = `/presupuesto?tipo=${o.tipo === 'hormigon' ? 'hormigon' : 'fibra-de-vidrio'}`;
 
   return (
     <>
-      <section style={{ paddingTop: 'clamp(40px,6vw,64px)' }}>
-        <div className="wrap">
-          <Crumbs items={[{ label: 'Obras', href: '/obras' }, { label: o.barrio }]} />
-          <h1 className="h1">{o.barrio}</h1>
-        </div>
-        <div className="wrap wrap--wide" style={{ marginTop: 32 }}>
-          <div className="pair">
-            <figure style={{ margin: 0 }}>
+      <section className="section--first-sm">
+        <div className="wrap wrap--wide">
+          <div className="phead">
+            <Crumbs items={[{ label: 'Obras', href: '/obras' }, { label: o.barrio }]} />
+            <h1 className="h1">{o.barrio}</h1>
+          </div>
+
+          <div className="pair mt-12">
+            <figure>
               <div className="frame">
                 <Image
                   src={obraImg(o.slug, 'antes')}
                   alt={`Terreno excavado para la pileta en ${o.zona}`}
                   fill
-                  sizes="(max-width: 760px) 100vw, 50vw"
+                  sizes="(max-width: 720px) 100vw, 50vw"
                   priority
                 />
               </div>
               <figcaption>El terreno, antes</figcaption>
             </figure>
-            <figure style={{ margin: 0 }}>
+            <figure>
               <div className="frame">
                 <Image
                   src={obraImg(o.slug, 'terminada')}
                   alt={`Pileta de ${tipoLabel(o.tipo).toLowerCase()} terminada en ${o.zona}`}
                   fill
-                  sizes="(max-width: 760px) 100vw, 50vw"
+                  sizes="(max-width: 720px) 100vw, 50vw"
                   priority
                 />
               </div>
@@ -79,8 +81,8 @@ export default async function ObraPage({ params }: Props) {
         </div>
       </section>
 
-      <section style={{ paddingTop: 'var(--sec-y-sm)', paddingBottom: 'var(--sec-y-sm)' }}>
-        <div className="wrap wrap--narrow">
+      <section className="section--sm">
+        <div className="wrap wrap--tight">
           <dl className="specs">
             <div>
               <dt>Barrio</dt>
@@ -100,35 +102,32 @@ export default async function ObraPage({ params }: Props) {
             </div>
           </dl>
 
-          <p className="body" style={{ marginTop: 32, lineHeight: 1.7 }}>
-            {obraLead(o)}
-          </p>
+          <p className="body mt-10">{obraLead(o)}</p>
 
-          <h2 className="h2 h2--sm" style={{ marginTop: 48, fontSize: 24 }}>
-            Más fotos de la obra
-          </h2>
+          <h2 className="h2 h2--sm reveal mt-16">Más fotos de la obra</h2>
           <div className="gallery">
             {GALERIA.map((g) => (
-              <figure key={g.kind} style={{ margin: 0 }}>
+              <figure key={g.kind} className="reveal">
                 <div className="frame">
                   <Image
                     src={obraImg(o.slug, g.kind)}
                     alt={`${g.caption} de la pileta en ${o.zona}`}
                     fill
-                    sizes="(max-width: 700px) 100vw, 480px"
+                    sizes="(max-width: 720px) 100vw, 400px"
                   />
                 </div>
-                <figcaption style={{ fontSize: 14, color: 'var(--muted)', marginTop: 10 }}>{g.caption}</figcaption>
+                <figcaption>{g.caption}</figcaption>
               </figure>
             ))}
           </div>
 
           <div className="obra-foot">
-            <Link href={`/presupuesto?tipo=${o.tipo === 'hormigon' ? 'hormigon' : 'fibra-de-vidrio'}`} className="btn btn--primary">
+            <Link href={presupuesto} className="btn btn--primary">
               Pedir presupuesto
             </Link>
             <Link href={`/obras/${nx.slug}`} className="lnk">
-              Obra siguiente: {nx.barrio} →
+              Obra siguiente: {nx.barrio}
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

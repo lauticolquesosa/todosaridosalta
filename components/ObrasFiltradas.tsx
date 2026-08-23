@@ -50,9 +50,9 @@ export default function ObrasFiltradas() {
         </p>
       </div>
 
-      <div className="cards" style={{ marginTop: 24 }}>
+      <div className="cards mt-10">
         {filtradas.map((o, i) => (
-          <ObraCard key={o.slug} obra={o} priority={i < 2} animate={false} />
+          <ObraCard key={o.slug} obra={o} priority={i < 2} />
         ))}
       </div>
     </>

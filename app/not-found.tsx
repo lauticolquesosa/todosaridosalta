@@ -2,13 +2,10 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <section style={{ paddingTop: 'clamp(64px,12vw,120px)', paddingBottom: 'clamp(64px,12vw,120px)' }}>
+    <section className="section--first">
       <div className="wrap wrap--tight">
-        <p className="eyebrow">Error 404</p>
-        <h1 className="h1" style={{ marginTop: 16, maxWidth: '18ch' }}>
-          Esta página no existe
-        </h1>
-        <p className="lead" style={{ marginTop: 20 }}>
+        <h1 className="h1">Esta página no existe</h1>
+        <p className="lead mt-5">
           Puede que el link esté viejo o que la escribimos distinto. Probá desde las obras o pedinos el presupuesto
           directo.
         </p>

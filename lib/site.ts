@@ -16,6 +16,19 @@ export const BRAND = {
   agency: { name: 'LCS DESIGN', url: 'https://lcsdesign.vercel.app/' },
 } as const;
 
+/** Navegación principal. El desplegable de piscinas se arma aparte. */
+export const PISCINAS_NAV = [
+  { href: '/piscinas', label: 'Comparar hormigón y fibra' },
+  { href: '/piscinas/hormigon', label: 'Piscinas de hormigón' },
+  { href: '/piscinas/fibra-de-vidrio', label: 'Piletas de fibra de vidrio' },
+] as const;
+
+export const NAV = [
+  { href: '/obras', label: 'Obras' },
+  { href: '/aridos-y-movimiento-de-suelos', label: 'Áridos' },
+  { href: '/clubes-e-instituciones', label: 'Clubes' },
+] as const;
+
 export function wa(text: string): string {
   return `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`;
 }

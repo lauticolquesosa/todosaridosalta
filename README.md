@@ -13,7 +13,7 @@ Construido por [LCS DESIGN](https://lcsdesign.vercel.app/).
 | Framework | Next.js 16 · App Router · React 19 |
 | Lenguaje | TypeScript en modo estricto |
 | Estilos | CSS propio con tokens (`app/globals.css`), sin dependencias de UI |
-| Tipografías | Archivo + Inter vía `next/font` (self-hosted, sin request a Google en runtime) |
+| Tipografías | Chivo 900 para títulos + IBM Plex Sans para texto, vía `next/font` (self-hosted, sin request a Google en runtime) |
 | Imágenes | `next/image` sobre WebP, con AVIF/WebP servidos según el navegador |
 | Deploy | Vercel (cero configuración) |
 
@@ -84,9 +84,19 @@ git push -u origin main
 
 Después, en Vercel: **Add New → Project → importar el repo**. Framework detectado automáticamente (Next.js), sin variables de entorno ni ajustes de build.
 
+## Sistema de diseño
+
+Todo sale de las variables de `app/globals.css`. Las tres decisiones que ordenan el resto:
+
+- **Color.** Base de hormigón claro y frío, con bandas grafito que marcan el ritmo entre secciones. La paleta sale del material con el que trabaja el cliente. Un solo acento, el naranja del logo, y siempre marca la acción: relleno de botón sobre fondo claro, texto y línea sobre grafito.
+- **Tipografía.** Dos familias. Chivo en un solo peso, el 900, para los títulos grandes, alineados a la izquierda y con el tracking cerrado. IBM Plex Sans para todo el texto y la interfaz. La escala es fluida con `clamp()` y se respeta en todo el sitio.
+- **Forma.** Un solo radio de 2 píxeles para botones, campos, tarjetas y fotos. El espaciado sale de una escala de múltiplos de cuatro y se pide por variable o por clase, nunca a mano.
+
+El movimiento es una sola cosa repetida: los bloques entran con un desplazamiento corto y opacidad, una vez, escalonando hasta cinco hermanos. Se anima solo `transform` y `opacity`, y `prefers-reduced-motion` lo apaga entero.
+
 ## Notas técnicas
 
 - **SEO**: metadata por página, canónicos, `sitemap.xml`, `robots.txt`, JSON-LD de `LocalBusiness` en el layout y de `FAQPage` en las páginas de hormigón y fibra.
 - **Accesibilidad**: navegación por teclado completa, foco visible, `aria-pressed` en filtros y opciones, errores de formulario asociados al campo, link de salto al contenido y respeto por `prefers-reduced-motion`.
-- **Sin JavaScript** el sitio se lee entero: las animaciones de entrada se desactivan con un `noscript`.
+- **Sin JavaScript** el sitio se lee entero: el estado oculto de las animaciones solo existe mientras el motor está activo, así que si el JS no corre no hay nada que destapar.
 - **Headers de seguridad** (`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`) en `next.config.ts`.

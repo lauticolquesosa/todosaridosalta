@@ -9,7 +9,7 @@ export default function Crumbs({ items }: { items: Crumb[] }) {
       <Link href="/">Inicio</Link>
       {items.map((c) => (
         <Fragment key={c.label}>
-          {' / '}
+          <span aria-hidden="true">/</span>
           {c.href ? <Link href={c.href}>{c.label}</Link> : <span>{c.label}</span>}
         </Fragment>
       ))}

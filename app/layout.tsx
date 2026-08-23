@@ -1,22 +1,22 @@
 import type { Metadata, Viewport } from 'next';
-import { Archivo, Inter } from 'next/font/google';
+import { Chivo, IBM_Plex_Sans } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Reveal from '@/components/Reveal';
 import { BRAND, SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const archivo = Archivo({
+const chivo = Chivo({
   subsets: ['latin'],
-  weight: ['600', '700'],
-  variable: '--font-archivo',
+  weight: ['900'],
+  variable: '--font-chivo',
   display: 'swap',
 });
 
-const inter = Inter({
+const plex = IBM_Plex_Sans({
   subsets: ['latin'],
   weight: ['400', '500'],
-  variable: '--font-inter',
+  variable: '--font-plex',
   display: 'swap',
 });
 
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#f4f2ee',
+  themeColor: '#14181a',
   width: 'device-width',
   initialScale: 1,
 };
@@ -106,19 +106,13 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-AR" className={`${archivo.variable} ${inter.variable}`}>
-      <head>
-        {/* Sin JS no corre el IntersectionObserver: el contenido se muestra igual. */}
-        <noscript>
-          <style>{'.reveal{opacity:1!important;transform:none!important}'}</style>
-        </noscript>
-      </head>
+    <html lang="es-AR" className={`${chivo.variable} ${plex.variable}`}>
       <body>
         <a className="skip" href="#main">
           Saltar al contenido
         </a>
         <Header />
-        <main id="main" style={{ paddingTop: 'var(--header-h)', flex: '1 0 auto' }}>
+        <main id="main" className="page">
           {children}
         </main>
         <Footer />

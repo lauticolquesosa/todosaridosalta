@@ -12,21 +12,21 @@ export const metadata: Metadata = {
 
 export default function PiscinasPage() {
   return (
-    <section className="section" style={{ paddingTop: 'var(--sec-y-sm)' }}>
+    <section className="section--first">
       <div className="wrap wrap--narrow">
-        <Crumbs items={[{ label: 'Piscinas' }]} />
-        <h1 className="h1" style={{ maxWidth: '18ch' }}>
-          Hormigón o fibra, la pregunta que nos hacen todos los días
-        </h1>
-        <p className="lead" style={{ marginTop: 24 }}>
-          Las dos opciones sirven, y la elección depende del terreno, del uso y del plazo. El hormigón se construye a
-          medida en el lugar. La fibra llega hecha y se instala en menos tiempo. Acá están las dos, una al lado de la
-          otra.
-        </p>
+        <div className="phead">
+          <Crumbs items={[{ label: 'Piscinas' }]} />
+          <h1 className="h1">Hormigón o fibra, la pregunta que nos hacen todos los días</h1>
+          <p className="lead phead__lead">
+            Las dos opciones sirven, y la elección depende del terreno, del uso y del plazo. El hormigón se construye a
+            medida en el lugar. La fibra llega hecha y se instala en menos tiempo. Acá están las dos, una al lado de la
+            otra.
+          </p>
+        </div>
 
         <div className="table-wrap reveal">
           <table>
-            <caption className="visually-hidden" style={{ position: 'absolute', left: -9999 }}>
+            <caption className="visually-hidden">
               Comparación entre piscinas de hormigón y piletas de fibra de vidrio
             </caption>
             <thead>

@@ -10,59 +10,52 @@ export default function HomePage() {
     <>
       {/* -------------------------------------------------------------- hero */}
       <section className="hero">
-        <div className="wrap">
-          <div className="hero__grid">
-            <div>
-              <h1 className="h1 h1--hero">Hacemos el pozo y hacemos la pileta.</h1>
-              <p className="hero__p">
-                Movimiento de suelos y construcción de piscinas en Salta. Un solo equipo desde la excavación hasta el
-                día que la llenás.
-              </p>
-              <div className="hero__cta" style={{ marginTop: 36 }}>
-                <Link href="/presupuesto" className="btn btn--primary btn--lg">
-                  Pedir presupuesto
-                </Link>
+        <div className="hero__media">
+          <Image src="/img/hero.webp" alt="" fill sizes="100vw" priority quality={80} />
+        </div>
+        <div className="hero__veil" aria-hidden="true" />
+        <div className="hero__inner">
+          <div className="wrap wrap--wide">
+            <h1 className="display hero__title">Hacemos el pozo y hacemos la pileta.</h1>
+            <p className="hero__p">
+              Movimiento de suelos y construcción de piscinas en Salta. Un solo equipo desde la excavación hasta el día
+              que la llenás.
+            </p>
+            <div className="hero__cta">
+              <Link href="/presupuesto" className="btn btn--primary btn--lg">
+                Pedir presupuesto
+              </Link>
+            </div>
+            <dl className="hero__stats">
+              <div>
+                <dt className="is-accent">2020</dt>
+                <dd>Construyendo piletas en Salta desde entonces</dd>
               </div>
-              <dl className="hero__stats">
-                <div>
-                  <dt className="is-accent">2020</dt>
-                  <dd>Construyendo en Salta desde entonces</dd>
-                </div>
-                <div>
-                  <dt>San Lorenzo y Salta capital</dt>
-                  <dd>Donde están nuestras obras</dd>
-                </div>
-                <div>
-                  <dt>Equipos propios</dt>
-                  <dd>De movimiento de suelo, nada tercerizado</dd>
-                </div>
-              </dl>
-            </div>
-            <div className="hero__media">
-              <Image
-                src="/img/hero.webp"
-                alt="Pileta terminada con solárium en una casa de Salta, al atardecer"
-                fill
-                sizes="(max-width: 900px) 100vw, 42vw"
-                priority
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
+              <div>
+                <dt>San Lorenzo y Salta capital</dt>
+                <dd>Donde están las obras que ya entregamos</dd>
+              </div>
+              <div>
+                <dt>Equipos propios</dt>
+                <dd>De movimiento de suelo, nada tercerizado</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>
 
       {/* ------------------------------------------------------------ quiénes */}
       <section className="section">
-        <div className="wrap">
-          <div className="reveal" style={{ maxWidth: 760 }}>
+        <div className="wrap wrap--wide">
+          <div className="reveal">
             <h2 className="h2">La obra la hacemos nosotros, de principio a fin</h2>
-            <p className="body" style={{ marginTop: 20 }}>
+            <p className="body mt-6">
               Todo Áridos Salta construye piscinas en Salta desde 2020. Trabajamos con equipos propios de movimiento de
               suelo, así que la excavación y la pileta las hace la misma gente. Nuestras obras están en San Lorenzo, La
               Reserva y Salta capital.
             </p>
           </div>
+
           <div className="pillars">
             <div className="reveal">
               <h3 className="h3">Un solo responsable</h3>
@@ -82,11 +75,12 @@ export default function HomePage() {
 
       {/* -------------------------------------------------------------- obras */}
       <section className="section section--alt">
-        <div className="wrap">
+        <div className="wrap wrap--wide">
           <div className="head-row reveal">
             <h2 className="h2">Piletas que ya están llenas</h2>
             <Link href="/obras" className="lnk">
-              Ver todas las obras →
+              Ver todas las obras
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
           <div className="cards">
@@ -98,11 +92,9 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------------------------------- hormigón o fibra */}
-      <section className="section">
-        <div className="wrap">
-          <h2 className="h2 reveal" style={{ maxWidth: '20ch' }}>
-            Hormigón o fibra, la pregunta que nos hacen todos los días
-          </h2>
+      <section className="section section--dark">
+        <div className="wrap wrap--wide">
+          <h2 className="h2 reveal">Hormigón o fibra, la pregunta que nos hacen todos los días</h2>
           <div className="duo">
             <div className="panel reveal">
               <h3>Hormigón</h3>
@@ -112,7 +104,8 @@ export default function HomePage() {
                 <li>Para el que quiere la pileta a medida.</li>
               </ul>
               <Link href="/piscinas/hormigon" className="lnk">
-                Piscinas de hormigón →
+                Piscinas de hormigón
+                <span aria-hidden="true">→</span>
               </Link>
             </div>
             <div className="panel reveal">
@@ -123,7 +116,8 @@ export default function HomePage() {
                 <li>Para el que quiere resolverlo rápido.</li>
               </ul>
               <Link href="/piscinas/fibra-de-vidrio" className="lnk">
-                Piletas de fibra de vidrio →
+                Piletas de fibra de vidrio
+                <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
@@ -131,25 +125,28 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------------- áridos */}
-      <section className="section section--alt">
-        <div className="wrap">
-          <div className="split reveal">
-            <div>
+      <section className="section">
+        <div className="wrap wrap--wide">
+          <div className="split">
+            <div className="split__text reveal">
               <h2 className="h2">Arena, ripio y la máquina, para obras y para particulares</h2>
-              <p className="body" style={{ marginTop: 20, maxWidth: '56ch' }}>
+              <p className="body mt-6">
                 La otra mitad del negocio. Vendemos áridos por metro cúbico y movemos suelos con equipos propios.
                 Entrega en el día y precio por cantidad.
               </p>
-              <Link href="/aridos-y-movimiento-de-suelos" className="lnk mt-24">
-                Ver áridos y movimiento de suelos →
-              </Link>
+              <div className="row">
+                <Link href="/aridos-y-movimiento-de-suelos" className="lnk">
+                  Ver áridos y movimiento de suelos
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
-            <div className="frame">
+            <div className="frame reveal">
               <Image
                 src="/img/aridos.webp"
                 alt="Pila de arena y ripio con una máquina cargando un camión"
                 fill
-                sizes="(max-width: 860px) 100vw, 45vw"
+                sizes="(max-width: 1080px) 100vw, 45vw"
               />
             </div>
           </div>
@@ -157,9 +154,9 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------------------------------------------- cta */}
-      <section className="cta-final">
-        <div className="wrap">
-          <Link href="/presupuesto" className="cta-band reveal">
+      <Link href="/presupuesto" className="cta-band">
+        <div className="wrap wrap--wide">
+          <div className="cta-band__inner">
             <h2 className="cta-band__title">Contanos dónde va la pileta</h2>
             <span className="cta-band__cta">
               Pedir presupuesto
@@ -167,10 +164,9 @@ export default function HomePage() {
                 →
               </span>
             </span>
-            <span className="cta-band__line" aria-hidden="true" />
-          </Link>
+          </div>
         </div>
-      </section>
+      </Link>
     </>
   );
 }

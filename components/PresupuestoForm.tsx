@@ -135,22 +135,14 @@ export default function PresupuestoForm() {
 
   if (confirm) {
     return (
-      <div style={{ marginTop: 36 }}>
-        <h2
-          tabIndex={-1}
-          ref={headingRef}
-          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 26 }}
-        >
-          Listo, revisá tu pedido
-        </h2>
-        <p style={{ fontSize: 16, lineHeight: 1.6, color: 'var(--muted)', marginTop: 12, maxWidth: '52ch' }}>
-          Al tocar <strong>Consultar</strong> se abre WhatsApp al {BRAND.phoneLabel} con este mensaje ya escrito. Solo
-          te queda darle enviar.
+      <div className="step-head" tabIndex={-1} ref={headingRef}>
+        <h2 className="step-title">Listo, revisá tu pedido</h2>
+        <p className="body body--gap">
+          Al tocar el botón se abre WhatsApp al {BRAND.phoneLabel} con este mensaje ya escrito. Solo te queda darle
+          enviar.
         </p>
-        <div className="msg-box">
-          <p style={{ whiteSpace: 'pre-line' }}>{msg}</p>
-        </div>
-        <div className="row" style={{ marginTop: 28 }}>
+        <div className="msg-box">{msg}</div>
+        <div className="row">
           <a
             className="btn btn--primary"
             href={wa(msg)}
@@ -161,11 +153,11 @@ export default function PresupuestoForm() {
             Consultar por WhatsApp
           </a>
           <button type="button" className="btn--quiet" onClick={back}>
-            ← Corregir algo
+            Corregir algo
           </button>
         </div>
         {enviado && (
-          <p aria-live="polite" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--muted)', marginTop: 20 }}>
+          <p className="small body--gap" aria-live="polite">
             Se abrió WhatsApp en otra pestaña. Si no se abrió, llamanos al{' '}
             <a href={BRAND.phoneHref}>{BRAND.phoneLabel}</a>.
           </p>
@@ -185,10 +177,10 @@ export default function PresupuestoForm() {
         Paso {step} de 4
       </p>
 
-      <div ref={headingRef} tabIndex={-1} style={{ outline: 'none' }}>
+      <div className="step-head" ref={headingRef} tabIndex={-1}>
         {step === 1 && (
           <>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>¿Qué querés hacer?</h2>
+            <h2 className="step-title">¿Qué querés hacer?</h2>
             <div className="opts">
               {QUE.map((v) => (
                 <button
@@ -207,7 +199,7 @@ export default function PresupuestoForm() {
 
         {step === 2 && (
           <>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>¿Qué tipo de pileta?</h2>
+            <h2 className="step-title">¿Qué tipo de pileta?</h2>
             <div className="opts">
               {TIPOS.map((t) => (
                 <button
@@ -227,11 +219,9 @@ export default function PresupuestoForm() {
 
         {step === 3 && (
           <>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>
-              ¿Dónde y de qué tamaño?
-            </h2>
-            <div style={{ marginTop: 20 }}>
-              <label className="field" style={{ marginBottom: 20 }}>
+            <h2 className="step-title">¿Dónde y de qué tamaño?</h2>
+            <div className="stack">
+              <label className="field">
                 <span className="field__label">Zona o barrio</span>
                 <input
                   type="text"
@@ -244,8 +234,8 @@ export default function PresupuestoForm() {
             </div>
             {budget.que !== SOLO_SUELOS && (
               <>
-                <span className="form-label">Medida aproximada</span>
-                <div className="opts opts--row" style={{ marginBottom: 24, marginTop: 0 }}>
+                <span className="form-label form-label--gap">Medida aproximada</span>
+                <div className="opts opts--row">
                   {MEDIDAS.map((v) => (
                     <button
                       key={v}
@@ -260,8 +250,8 @@ export default function PresupuestoForm() {
                 </div>
               </>
             )}
-            <span className="form-label">¿El terreno ya está preparado?</span>
-            <div className="opts opts--row" style={{ marginTop: 0, marginBottom: 24 }}>
+            <span className="form-label form-label--gap">¿El terreno ya está preparado?</span>
+            <div className="opts opts--row">
               {TERRENOS.map((v) => (
                 <button
                   key={v}
@@ -274,8 +264,8 @@ export default function PresupuestoForm() {
                 </button>
               ))}
             </div>
-            <label className="field">
-              <span className="field__label">Algo más que quieras contarnos (opcional)</span>
+            <label className="field field--gap">
+              <span className="field__label">Algo más que quieras contarnos</span>
               <textarea
                 rows={3}
                 value={budget.detalle}
@@ -288,7 +278,7 @@ export default function PresupuestoForm() {
 
         {step === 4 && (
           <>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22 }}>¿Cómo te contactamos?</h2>
+            <h2 className="step-title">¿Cómo te contactamos?</h2>
             <div className="stack">
               <label className="field">
                 <span className="field__label">Tu nombre</span>
@@ -328,7 +318,7 @@ export default function PresupuestoForm() {
       </div>
 
       {stepError && (
-        <p className="field__error" role="alert" style={{ marginTop: 20 }}>
+        <p className="field__error body--gap" role="alert">
           {stepError}
         </p>
       )}
@@ -336,7 +326,7 @@ export default function PresupuestoForm() {
       <div className="wizard-foot">
         {step > 1 && (
           <button type="button" className="btn--quiet" onClick={back}>
-            ← Volver
+            Volver
           </button>
         )}
         <button type="button" className="btn btn--primary" onClick={next}>

@@ -2,13 +2,11 @@ node_modules
 .next
 out
 .vercel
-.env*.local
+.env*
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
 
-# Documentos internos del proyecto (no se publican)
+# Documentos internos del estudio, no forman parte del sitio
 docs/
-
-.vercel
-.env*
+REDESIGN-WEB.md
