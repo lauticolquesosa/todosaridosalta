@@ -503,7 +503,6 @@ table {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--on-dark-muted);
 }
 
 .nav {
@@ -1517,7 +1516,6 @@ figcaption {
   font-weight: 400;
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--on-dark-muted);
 }
 .footer__side {
   display: grid;
