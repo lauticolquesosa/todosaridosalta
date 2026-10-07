@@ -13,7 +13,7 @@ export const BRAND = {
   region: 'Salta',
   country: 'AR',
   founded: '2020',
-  agency: { name: 'LCS DESIGN', url: 'https://lcsdesign.vercel.app/' },
+  agency: { name: 'LCS DESIGN', url: 'https://lcsdesignstudio.com.ar/' },
 } as const;
 
 /** Navegación principal. El desplegable de piscinas se arma aparte. */
